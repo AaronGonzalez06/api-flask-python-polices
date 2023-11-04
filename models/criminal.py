@@ -1,6 +1,7 @@
 from config.config import db
 
 class Criminal(db.Model):
+    __tablename__ = 'criminals'
     id= db.Column(db.Integer, primary_key=True)
     name= db.Column(db.String(255))
     surname= db.Column(db.String(255))
@@ -11,9 +12,10 @@ class Criminal(db.Model):
     location= db.Column(db.String(255))
     arrests= db.Column(db.Integer)
     id_police = db.Column(db.Integer, db.ForeignKey('police.id'))
-    police = db.relationship('Police', remote_side=[id], uselist=False, backref='policeCriminal')
+    officer = db.relationship('Police', backref='criminals')
+    listDetection = None
 
-    def __init__(self, name,surname,phone,dni,age,province,location,arrests,police):
+    def __init__(self, name,surname,phone,dni,age,province,location,arrests,officer):
         self.name = name
         self.surname = surname
         self.phone = phone
@@ -21,5 +23,5 @@ class Criminal(db.Model):
         self.age = age
         self.province = province
         self.location = location
-        self.police = police
+        self.officer = officer
         self.arrests = arrests

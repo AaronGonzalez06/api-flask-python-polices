@@ -4,13 +4,10 @@ from models.police import Police
 from schemas.PoliceSchema import PoliceSchema
 import bcrypt
 from services.JwtService import JwtService
-##Cambiar luego el origen
-from models.police import Criminal
+from models.criminal import Criminal
 from schemas.CriminalSchema import CriminalSchema
-from models.police import Detection
+from models.detection import Detection
 from schemas.DetectionSchema import DetectionSchema
-##
-
 
 police_schema = PoliceSchema()
 polices_schema = PoliceSchema(many=True)
@@ -18,6 +15,10 @@ criminal_schema = CriminalSchema()
 criminals_schema = CriminalSchema(many=True)
 detection_schema = DetectionSchema()
 detections_schema = DetectionSchema(many=True)
+
+Criminal.listDetection = db.relationship('Detection', uselist=True)
+Police.criminalsDetained = db.relationship('Criminal',uselist=True)
+Detection.criminalDection = db.relationship('Criminal', backref='detection')
 
 
 #login
